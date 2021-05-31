@@ -14,8 +14,8 @@ JIRA_API_TOKEN = ""
 
 # This Regex looks for text in the form of JIRA-PROJECT_CODE-TICKET_NO
 REGEX_ISSUE_ID = "JIRA\-([a-zA-Z]*)\-([0-9]*)"
-# Seperator between the ISSUE_ID and commit message
-ID_COMMIT_SEPERATOR = "-"
+# Separator between the ISSUE_ID and commit message
+ID_COMMIT_SEPARATOR = "-"
 
 
 def execute_cmd(full_cmd, cwd=None):
@@ -50,7 +50,7 @@ def add_jira_comment(comment):
     has_jira_commit = check_for_jira_commit(comment)
     if has_jira_commit:
         jira_id = re.search(REGEX_ISSUE_ID, comment)
-        prefix_length = len(jira_id[0] + ID_COMMIT_SEPERATOR)
+        prefix_length = len(jira_id[0] + ID_COMMIT_SEPARATOR)
         message = comment[prefix_length:]
         ticket_code = extract_ticket_code(jira_id)
         jira.add_comment(ticket_code, message)
