@@ -46,18 +46,12 @@ def check_for_jira_commit(comment):
 def add_jira_comment(comment):
     """Adds a jira comment to the desired ticket"""
     # a username/password tuple
-    print('jira login')
-    print(comment)
     jira = JIRA(server=JIRA_URL, basic_auth=(JIRA_USERNAME, JIRA_PASSWORD))
     has_jira_commit = check_for_jira_commit(comment)
     if has_jira_commit:
-        print('has jira commit')
         jira_id = re.search(REGEX_ISSUE_ID, comment)
-        print(jira_id)
         prefix_length = len(jira_id[0] + ID_COMMIT_SEPERATOR)
-        print(prefix_length)
         message = comment[prefix_length:]
-        print(message)
         ticket_code = extract_ticket_code(jira_id)
         jira.add_comment(ticket_code, message)
 
@@ -66,11 +60,8 @@ def extract_ticket_code(jira_id):
     """Extract ticket code from commit message prefix"""
     split_jira_id = jira_id[0].split('-')
     ticket_code = split_jira_id[1] + '-' + split_jira_id[2]
-    print(ticket_code)
     return ticket_code
 
 
 commit_message = get_last_commit_message()
-print(commit_message)
-commit_message = "JIRA-POR-227-testing"
 add_jira_comment(commit_message)
