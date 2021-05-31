@@ -10,7 +10,7 @@ from jira import JIRA
 JIRA_URL = "https://JIRA_NAME.atlassian.net"
 JIRA_USERNAME = "USER_NAME"
 # For Jira Cloud use a token generated here: https://id.atlassian.com/manage/api-tokens
-JIRA_PASSWORD = ""
+JIRA_API_TOKEN = ""
 
 # This Regex looks for text in the form of JIRA-PROJECT_CODE-TICKET_NO
 REGEX_ISSUE_ID = "JIRA\-([a-zA-Z]*)\-([0-9]*)"
@@ -46,7 +46,7 @@ def check_for_jira_commit(comment):
 def add_jira_comment(comment):
     """Adds a jira comment to the desired ticket"""
     # a username/password tuple
-    jira = JIRA(server=JIRA_URL, basic_auth=(JIRA_USERNAME, JIRA_PASSWORD))
+    jira = JIRA(server=JIRA_URL, basic_auth=(JIRA_USERNAME, JIRA_API_TOKEN))
     has_jira_commit = check_for_jira_commit(comment)
     if has_jira_commit:
         jira_id = re.search(REGEX_ISSUE_ID, comment)
